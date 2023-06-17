@@ -2,6 +2,7 @@
   "name": "react-wordle",
   "version": "0.1.0",
   "private": true,
+  "homepage": "wordle",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
