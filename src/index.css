@@ -1,3 +1,41 @@
+header {
+  border: 1px solid blue;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  margin: 0 0 30px 0;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+}
+
+.languageDiv {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  margin: 5px;
+  width: 110px;
+  height: 50px;
+  background: #eee;
+  display: inline-table;
+  border-radius: 6px;
+  font-family: verdana;
+  line-height: 50px;
+  font-size: 15px;
+  border: none;
+}
+
+.alert {
+  display: flex;
+  justify-content: center;
+  /* position: auto; */
+  /* justify-self: center; */
+  margin: auto;
+  margin-top: 5px;
+  width: 22%;
+}
+
 body {
   text-align: center;
   font-size: 1em;
@@ -6,11 +44,8 @@ body {
 }
 h1 {
   font-size: 1.2em;
-  padding: 20px 0;
-  border-bottom: 1px solid #eee;
-  margin: 0 0 30px 0;
-  color: #333;
 }
+
 /* rows */
 .row {
   text-align: center;
@@ -75,7 +110,7 @@ h1 {
   border: none;
 }
 .keypad > button.action {
-  width: 75px;
+  width: 62px;
 }
 .keypad > button.green {
   background: #5ac85a;

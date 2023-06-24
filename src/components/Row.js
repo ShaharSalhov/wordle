@@ -1,4 +1,5 @@
 import React from 'react'
+import letters from '../letters.json'
 
 export default function Row({ guess, currentGuess }) {
 
@@ -14,18 +15,37 @@ export default function Row({ guess, currentGuess }) {
 
   if (currentGuess) {
 
-    let letters = currentGuess.split('')
+    let currentGuessLetters = currentGuess.split('')
 
-    return (
-      <div className='row current'>
-        {letters.map( (letter, i) => (
-          <div key={i} className='filled' >{letter}</div>
-        ))}
-        {[...Array(5 - letters.length)].map((_, i) => (
-          <div key={i} ></div>
-        ))}
-      </div>
-    )
+    if ( letters.English.map((ob => ob.key)).includes(currentGuessLetters[0]) ) {
+      return (
+        <div className='row current'>
+          {currentGuessLetters.map( (letter, i) => (
+            <div key={i} className='filled' >{letter}</div>
+          ))}
+          {[...Array(5 - currentGuessLetters.length)].map((_, i) => (
+            <div key={i} ></div>
+          ))}
+        </div>
+      )
+    }
+
+    else if ( letters.Hebrew.map((ob => ob.key)).includes(currentGuessLetters[0]) ) {
+      return (
+        <div className='row current'>
+          {[...Array(5 - currentGuessLetters.length)].map((_, i) => (
+            <div key={i} ></div>
+          ))}
+          {currentGuessLetters.map( (letter, i) => (
+            <div key={i} className='filled' >{letter}</div>
+          ))}
+        </div>
+      )
+    }
+
+
+
+    
   }
 
   return (

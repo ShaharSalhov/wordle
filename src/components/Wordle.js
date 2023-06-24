@@ -3,10 +3,14 @@ import useWordle from '../hooks/useWordle'
 import Grid from './Grid'
 import Keypad from './Keypad'
 import Modal from './Modal'
+import LanguageIcon from '@mui/icons-material/Language';
+import IconButton from '@mui/material/IconButton';
+import Alert from '@mui/material/Alert';
 
-export default function Wordle( {solution} ) {
 
-  const { currentGuess, handleKeyup, guesses, isCorrect, turn, usedKeys } = useWordle(solution)
+export default function Wordle( {solution, language, setLanguage } ) {
+
+  const { currentGuess, handleKeyup, guesses, isCorrect, turn, usedKeys, resetGame, isWrongLanguage } = useWordle(solution, language)
   const [showModal, setShowModal] = useState(false)
 
   useEffect( () => {
@@ -26,14 +30,34 @@ export default function Wordle( {solution} ) {
   }, [handleKeyup, isCorrect, turn])
 
   return (
-    <div>
+    <React.Fragment>
+      <header className="header">
+        <h1>WORDLE (LINGO)</h1>
 
-      <Grid guesses={guesses} currentGuess={currentGuess} turn={turn} />
+        <div className="languageDiv">
+          <p>{language}</p>
+          <IconButton disableRipple>
+            <LanguageIcon onClick={ () => {
+              resetGame()
+              language === "English" ? setLanguage("Hebrew") : setLanguage("English") 
+            }
+              }/>
+          </IconButton>
+        </div>  
+      </header>
 
-      <Keypad usedKeys={usedKeys} handleKeyup={handleKeyup} />
+      <body className="body">
+        <div>
+          <Grid guesses={guesses} currentGuess={currentGuess} turn={turn} />
 
-      {showModal && <Modal isCorrect={isCorrect} turn={turn} solution={solution} />}
-      
-    </div>
+          {isWrongLanguage ? <Alert className='alert' severity="error">Check your keyboard language!</Alert> : null}
+
+          <Keypad usedKeys={usedKeys} handleKeyup={handleKeyup} language={language}/>
+
+          {showModal && <Modal isCorrect={isCorrect} turn={turn} solution={solution} resetGame={resetGame} setShowModal={setShowModal}/>}
+
+          </div>
+      </body>
+    </React.Fragment>
   )
 }

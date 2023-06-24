@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Modal( {isCorrect, turn, solution} ) {
+export default function Modal( {isCorrect, turn, solution, resetGame, setShowModal} ) {
   return (
     <div className='modal'>
 
@@ -9,6 +9,10 @@ export default function Modal( {isCorrect, turn, solution} ) {
           <h1>You Win!</h1>
           <p className='solution'>{solution}</p>
           <p>You found the solution in {turn} guesses</p>
+          <button className='button' onClick={ () => {
+            resetGame()
+            setShowModal(false)
+          }} >New Game</button>
         </div>
       )}
 
@@ -17,6 +21,10 @@ export default function Modal( {isCorrect, turn, solution} ) {
           <h1>Nevermind...</h1>
           <p className='solution'>{solution}</p>
           <p>Better luck next time!</p>
+          <button className='button' onClick={ () => {
+            resetGame()
+            setShowModal(false)
+            }} >New Game</button>
         </div>
       )}
 

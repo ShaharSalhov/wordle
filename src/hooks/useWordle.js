@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const useWordle = (solution) => {
+const useWordle = (solution, language) => {
 
   const [turn, setTurn] = useState(0) 
   const [currentGuess, setCurrentGuess] = useState('')
@@ -9,6 +9,16 @@ const useWordle = (solution) => {
   const [isCorrect, setIsCorrect] = useState(false)
   const [usedKeys, setUsedKeys] = useState({})
 
+  const [isWrongLanguage, setIsWrongLanguage] = useState(false)
+
+  const resetGame = () => {
+    setTurn(0);
+    setCurrentGuess('')
+    setGuesses([...Array(6)])
+    setHistory([])
+    setIsCorrect(false)
+    setUsedKeys({})
+  }
 
   const formatGuess = () => {
 
@@ -106,18 +116,37 @@ const useWordle = (solution) => {
       })
       return
     }
+    setIsWrongLanguage(false)
 
-    if (/^[A-Za-z]$/.test(key)) {
+    if (/^[A-Za-z]$/.test(key)) {  //English
       if (currentGuess.length < 5) {
-        setCurrentGuess((prev) =>  {
-          return prev + key
-        })
+        // setIsWrongLanguage(false)
+        if (language !== "English") {
+          setIsWrongLanguage(true)
+        } else {
+          setCurrentGuess((prev) =>  {
+            return prev + key
+          })
+        }
+      }
+    }
+
+    if (/^[\u0590-\u05fe]$/.test(key)) {  //Hebrew
+      if (currentGuess.length < 5) {
+        // setIsWrongLanguage(false)
+        if (language !== "Hebrew") {
+          setIsWrongLanguage(true)
+        } else {
+          setCurrentGuess((prev) =>  {
+            return key + prev
+          })
+        }
       }
     }
 
   }
 
-  return {turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyup}
+  return {turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyup, resetGame, isWrongLanguage} 
 
 }
 
