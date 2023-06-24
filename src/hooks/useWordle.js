@@ -110,9 +110,16 @@ const useWordle = (solution, language) => {
       addNewGuess(formatted)
     }
 
-    if(key === "Backspace") {
+    if(key === "Backspace" && language === "English") {
       setCurrentGuess((prev) => {
         return prev.slice(0, -1)
+      })
+      return
+    }
+
+    if(key === "Backspace" && language === "Hebrew") {
+      setCurrentGuess((prev) => {
+        return prev.slice(1, prev.length)
       })
       return
     }
@@ -120,7 +127,6 @@ const useWordle = (solution, language) => {
 
     if (/^[A-Za-z]$/.test(key)) {  //English
       if (currentGuess.length < 5) {
-        // setIsWrongLanguage(false)
         if (language !== "English") {
           setIsWrongLanguage(true)
         } else {
@@ -131,9 +137,14 @@ const useWordle = (solution, language) => {
       }
     }
 
-    if (/^[\u0590-\u05fe]$/.test(key)) {  //Hebrew
+    if (/^[\u05D0-\u05EA]$/.test(key)) {  //Hebrew
+
+      let finalHebrewLetters = ["\u05DA", "\u05DD", "\u05DF", "\u05E3", "\u05E5"];  
+      if (currentGuess.length !== 4 && finalHebrewLetters.includes(key)) {
+        return
+      } 
+
       if (currentGuess.length < 5) {
-        // setIsWrongLanguage(false)
         if (language !== "Hebrew") {
           setIsWrongLanguage(true)
         } else {
