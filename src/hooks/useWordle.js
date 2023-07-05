@@ -1,5 +1,4 @@
 import { useState } from "react"
-import letters from "../letters.json"
 
 const useWordle = (solution, language) => {
 
