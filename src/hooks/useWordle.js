@@ -1,4 +1,5 @@
 import { useState } from "react"
+import letters from "../letters.json"
 
 const useWordle = (solution, language) => {
 
@@ -20,34 +21,88 @@ const useWordle = (solution, language) => {
     setUsedKeys({})
   }
 
+  const middleHebrewLettersToFinalLetters = {
+    "\u05E6": "\u05E5",
+    "\u05E4": "\u05E3",
+    "\u05DF": "\u05DF",
+    "\u05DE": "\u05DD",
+    "\u05DB": "\u05DA"
+  }
+
+  const finalHebrewLettersArray = ["\u05DA", "\u05DD", "\u05DF", "\u05E3", "\u05E5"]; 
+
   const formatGuess = () => {
 
     let solutionArray = [...solution]
 
-    let formattedGuess = [...currentGuess].map( (l) => {
-      return {key: l, color: "grey"}
-    })
+    if (language === "English") {
 
-    formattedGuess.forEach((l, i) => {
-      if (solutionArray[i] === l.key) {
-        formattedGuess[i].color = "green"
-        solutionArray[i] = null
-      }
-    });
+      let formattedGuess = [...currentGuess].map( (l) => {
+        return {key: l, color: "grey"}
+      })
+  
+      formattedGuess.forEach((l, i) => {
+        if (solutionArray[i] === l.key) {
+          formattedGuess[i].color = "green"
+          solutionArray[i] = null ///check
+        }
+      });
+  
+      formattedGuess.forEach((l,i) => {
+        if (solutionArray.includes(l.key) && l.color !== "green") {
+          formattedGuess[i].color = "yellow"
+          solutionArray[solutionArray.indexOf(l.key)] = null
+        }
+        // if (!finalHebrewLettersArray.includes(l.key) && solutionArray[4] === middleHebrewLettersToFinalLetters[l.key])
+        //   formattedGuess[i].color = "yellow"
+        //   solutionArray[solutionArray.indexOf(l.key)] = null
+      })
+  
+      return formattedGuess
+    }
 
-    formattedGuess.forEach((l,i) => {
-      if (solutionArray.includes(l.key) && l.color !== "green") {
-        formattedGuess[i].color = "yellow"
-        solutionArray[solutionArray.indexOf(l.key)] = null
-      }
-    })
+    else if (language === "Hebrew") {
 
-    return formattedGuess
+      const solutionLength = solution.length
+
+      let formattedGuess = [...currentGuess].map( (l) => {
+        return {key: l, color: "grey"}
+      })
+      
+
+      console.log(solutionArray, "solutionArray")
+      console.log(formattedGuess, "formattedGuess")
+
+      formattedGuess.forEach((l, i) => {
+        console.log(`i=${i} l.key=${l.key} | solutionArray[(solutionLength -1) - i]=${solutionArray[(solutionLength -1) - i]}|
+        will change formattedGuess[(solutionLength -1) - i].key=${formattedGuess[(solutionLength -1) - i].key}`)
+
+        if (solutionArray[(solutionLength -1) - i] === l.key) {
+          formattedGuess[i].color = "green"
+          solutionArray[(solutionLength -1) - i] = null // TODO: check why
+        }
+      });
+  
+      formattedGuess.forEach((l,i) => {
+        if (solutionArray.includes(l.key) && l.color !== "green") {
+          formattedGuess[i].color = "yellow"
+          solutionArray[solutionArray.indexOf(l.key)] = null// TODO: check why
+        }
+        if (!finalHebrewLettersArray.includes(l.key) && solutionArray[4] === middleHebrewLettersToFinalLetters[l.key]) {
+          formattedGuess[i].color = "yellow"
+          solutionArray[solutionArray.indexOf(l.key)] = null
+        }
+      })
+  
+      return formattedGuess
+    }
   }
+
+    
 
   const addNewGuess = (formattedGuess) => {
 
-    if (currentGuess === solution) {
+    if ( language === "English" ? currentGuess === solution : currentGuess.split('').reverse().join('') === solution ) {
       setIsCorrect(true)
     }
 
@@ -138,9 +193,8 @@ const useWordle = (solution, language) => {
     }
 
     if (/^[\u05D0-\u05EA]$/.test(key)) {  //Hebrew
-
-      let finalHebrewLetters = ["\u05DA", "\u05DD", "\u05DF", "\u05E3", "\u05E5"];  
-      if (currentGuess.length !== 4 && finalHebrewLetters.includes(key)) {
+ 
+      if (currentGuess.length !== 4 && finalHebrewLettersArray.includes(key)) {
         return
       } 
 
