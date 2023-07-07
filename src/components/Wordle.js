@@ -15,20 +15,20 @@ export default function Wordle( {solution, language, setLanguage, generateNewSol
 
   useEffect( () => {
     window.addEventListener('keyup', handleKeyup)
-    console.log("The hook is running", {isCorrect, turn})
 
-    if (isCorrect) {
-      setTimeout(() => setShowModal(true), 2000)
-      window.removeEventListener('keyup', handleKeyup)
-    }
-
-    if (turn > 5) {
-      setTimeout(() => setShowModal(true), 2000)
+    if (showModal) {
       window.removeEventListener('keyup', handleKeyup)
     }
 
     return () => window.removeEventListener('keyup', handleKeyup)
-  }, [handleKeyup, isCorrect, turn])
+  }, [handleKeyup, showModal])
+
+
+  useEffect( () => {
+    if (isCorrect || turn > 5) {
+      setTimeout(() => setShowModal(true), 2000)
+    }
+  }, [isCorrect, turn])
 
   return (
     <React.Fragment>
