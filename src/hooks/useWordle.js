@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const useWordle = (solution, language) => {
+const useWordle = (solution, language, generateNewSolution) => {
 
   const [turn, setTurn] = useState(0) 
   const [currentGuess, setCurrentGuess] = useState('')
@@ -17,6 +17,7 @@ const useWordle = (solution, language) => {
     setHistory([])
     setIsCorrect(false)
     setUsedKeys({})
+    generateNewSolution()
   }
 
   const middleHebrewLettersToFinalLetters = {
@@ -207,39 +208,34 @@ const useWordle = (solution, language) => {
 
     if (/^[\u05D0-\u05EA]$/.test(key)) {  //Hebrew
 
-      
-      //
-      
-      if (currentGuess.length <= 3 && !finalHebrewLettersArray.includes(key)) {
-        setCurrentGuess((prev) =>  {
-          return key + prev
-        })
-      } 
-      else if (currentGuess.length <= 3 && finalHebrewLettersArray.includes(key)) {
-        setCurrentGuess((prev) =>  {
-          return finalHebrewLettersToMiddleLettersMenu[key] + prev
-        })
-      }
-
-      else if (currentGuess.length === 4 && finalHebrewLettersArray.includes(key)) {
-        setCurrentGuess((prev) =>  {
-          return key + prev
-        })
-      } 
-      else if (currentGuess.length === 4 && middleHebrewLettersToFinalLetters[key]) {
-        setCurrentGuess((prev) =>  {
-          return middleHebrewLettersToFinalLetters[key] + prev
-        })
-      }
-      else setCurrentGuess((prev) =>  {
-        return key + prev
-      })
-
-      
-      //
- 
-
       if (currentGuess.length < 5) {
+
+        if (currentGuess.length <= 3 && !finalHebrewLettersArray.includes(key)) {
+          setCurrentGuess((prev) =>  {
+            return key + prev
+          })
+        } 
+        else if (currentGuess.length <= 3 && finalHebrewLettersArray.includes(key)) {
+          setCurrentGuess((prev) =>  {
+            return finalHebrewLettersToMiddleLettersMenu[key] + prev
+          })
+        }
+
+        else if (currentGuess.length === 4 && finalHebrewLettersArray.includes(key)) {
+          setCurrentGuess((prev) =>  {
+            return key + prev
+          })
+        } 
+        else if (currentGuess.length === 4 && middleHebrewLettersToFinalLetters[key]) {
+          setCurrentGuess((prev) =>  {
+            return middleHebrewLettersToFinalLetters[key] + prev
+          })
+        }
+        else setCurrentGuess((prev) =>  {
+          return key + prev
+        })
+ 
+        
         if (language !== "Hebrew") {
           setIsWrongLanguage(true)
         // } else {
