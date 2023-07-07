@@ -8,6 +8,11 @@ function App() {
   const [solution, setSolution] = useState(null)
   const [language, setLanguage] = useState("English")
 
+  const generateNewSolution = () => {
+    const randomSolution = solutions[language][Math.floor(Math.random() * solutions[language].length)]
+    setSolution(randomSolution.word)
+  }
+
   useEffect( () => {
     // fetch('http://localhost:3001/solutions')
     //   .then(res => res.json())
@@ -15,13 +20,12 @@ function App() {
     //     const randomSolution = json[Math.floor(Math.random()*json.length)]
     //     setSolution(randomSolution.word)
     //   })
-    const randomSolution = solutions[language][Math.floor(Math.random() * solutions[language].length)]
-    setSolution(randomSolution.word)
-  }, [setSolution, language])
+    generateNewSolution()
+  }, [setSolution, language, generateNewSolution])
 
   return (
     <div className="App">
-        { solution && <Wordle solution={solution} language={language} setLanguage={setLanguage} /> }
+        { solution && <Wordle solution={solution} language={language} setLanguage={setLanguage} generateNewSolution={generateNewSolution} /> }
     </div>
   );
 }

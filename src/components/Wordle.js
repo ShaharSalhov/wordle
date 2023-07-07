@@ -8,9 +8,9 @@ import IconButton from '@mui/material/IconButton';
 import Alert from '@mui/material/Alert';
 
 
-export default function Wordle( {solution, language, setLanguage } ) {
+export default function Wordle( {solution, language, setLanguage, generateNewSolution } ) {
 
-  const { currentGuess, handleKeyup, guesses, isCorrect, turn, usedKeys, resetGame, isWrongLanguage } = useWordle(solution, language)
+  const { currentGuess, handleKeyup, guesses, isCorrect, turn, usedKeys, resetGame, isWrongLanguage } = useWordle(solution, language, generateNewSolution)
   const [showModal, setShowModal] = useState(false)
 
   useEffect( () => {
@@ -54,7 +54,7 @@ export default function Wordle( {solution, language, setLanguage } ) {
 
           <Keypad usedKeys={usedKeys} handleKeyup={handleKeyup} language={language}/>
 
-          {showModal && <Modal isCorrect={isCorrect} turn={turn} solution={solution} resetGame={resetGame} setShowModal={setShowModal}/>}
+          {showModal && <Modal isCorrect={isCorrect} turn={turn} solution={solution} resetGame={resetGame} setShowModal={setShowModal} />}
 
             <p>{solution}</p>
           </div>
