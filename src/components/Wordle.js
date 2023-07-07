@@ -47,8 +47,7 @@ export default function Wordle( {solution, language, setLanguage, generateNewSol
         </div>  
       </header>
 
-      <body className="body">
-        <div>
+      <div>
           <Grid guesses={guesses} currentGuess={currentGuess} turn={turn} />
 
           {isWrongLanguage ? <Alert className='alert' severity="error">Check your keyboard language!</Alert> : null}
@@ -58,8 +57,7 @@ export default function Wordle( {solution, language, setLanguage, generateNewSol
           {showModal && <Modal isCorrect={isCorrect} turn={turn} solution={solution} resetGame={resetGame} setShowModal={setShowModal}/>}
 
             <p>{solution}</p>
-          </div>
-      </body>
+      </div>
     </React.Fragment>
   )
 }
