@@ -37,12 +37,12 @@ export default function Wordle( {solution, language, setLanguage, generateNewSol
 
         <div className="languageDiv">
           <p>{language}</p>
-          <IconButton disableRipple>
-            <LanguageIcon onClick={ () => {
+          <IconButton disableRipple onClick={ () => {
               resetGame()
               language === "English" ? setLanguage("Hebrew") : setLanguage("English") 
             }
-              }/>
+              }>
+            <LanguageIcon />
           </IconButton>
         </div>  
       </header>
