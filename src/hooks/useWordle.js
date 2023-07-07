@@ -20,11 +20,11 @@ const useWordle = (solution, language) => {
   }
 
   const middleHebrewLettersToFinalLetters = {
-    "\u05E6": "\u05E5",
-    "\u05E4": "\u05E3",
-    "\u05DF": "\u05DF",
-    "\u05DE": "\u05DD",
-    "\u05DB": "\u05DA"
+    "\u05E6": "\u05E5", // Tsadi
+    "\u05E4": "\u05E3", // Pei
+    "\u05E0": "\u05DF", // Nun 
+    "\u05DE": "\u05DD", // Mem
+    "\u05DB": "\u05DA" // Haf
   }
 
   const createFinalHebrewLettersToMiddleLetters = ( middleHebrewLettersToFinalLetters ) => {
@@ -98,7 +98,7 @@ const useWordle = (solution, language) => {
           solutionArray[solutionArray.indexOf(l.key)] = null
         }        
       })
-  
+      console.log(middleHebrewLettersToFinalLetters)
       return formattedGuess
     }
   }
