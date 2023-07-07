@@ -8,7 +8,6 @@ const useWordle = (solution, language) => {
   const [history, setHistory] = useState([]) // each guess is a string
   const [isCorrect, setIsCorrect] = useState(false)
   const [usedKeys, setUsedKeys] = useState({})
-
   const [isWrongLanguage, setIsWrongLanguage] = useState(false)
 
   const resetGame = () => {
@@ -28,7 +27,18 @@ const useWordle = (solution, language) => {
     "\u05DB": "\u05DA"
   }
 
+  const createFinalHebrewLettersToMiddleLetters = ( middleHebrewLettersToFinalLetters ) => {
+
+    const finalHebrewLettersToMiddleLetters = {};
+    Object.entries(middleHebrewLettersToFinalLetters).forEach(([key, value]) => {
+      finalHebrewLettersToMiddleLetters[value] = key;
+    });
+    return finalHebrewLettersToMiddleLetters;
+  }
+
   const finalHebrewLettersArray = ["\u05DA", "\u05DD", "\u05DF", "\u05E3", "\u05E5"]; 
+
+
 
   const formatGuess = () => {
 
@@ -68,13 +78,9 @@ const useWordle = (solution, language) => {
         return {key: l, color: "grey"}
       })
       
-
-      console.log(solutionArray, "solutionArray")
-      console.log(formattedGuess, "formattedGuess")
-
       formattedGuess.forEach((l, i) => {
-        console.log(`i=${i} l.key=${l.key} | solutionArray[(solutionLength -1) - i]=${solutionArray[(solutionLength -1) - i]}|
-        will change formattedGuess[(solutionLength -1) - i].key=${formattedGuess[(solutionLength -1) - i].key}`)
+        // console.log(`i=${i} l.key=${l.key} | solutionArray[(solutionLength -1) - i]=${solutionArray[(solutionLength -1) - i]}|
+        // will change formattedGuess[(solutionLength -1) - i].key=${formattedGuess[(solutionLength -1) - i].key}`)
 
         if (solutionArray[(solutionLength -1) - i] === l.key) {
           formattedGuess[i].color = "green"
@@ -90,7 +96,7 @@ const useWordle = (solution, language) => {
         if (!finalHebrewLettersArray.includes(l.key) && solutionArray[4] === middleHebrewLettersToFinalLetters[l.key]) {
           formattedGuess[i].color = "yellow"
           solutionArray[solutionArray.indexOf(l.key)] = null
-        }
+        }        
       })
   
       return formattedGuess
@@ -192,18 +198,47 @@ const useWordle = (solution, language) => {
     }
 
     if (/^[\u05D0-\u05EA]$/.test(key)) {  //Hebrew
- 
-      if (currentGuess.length !== 4 && finalHebrewLettersArray.includes(key)) {
-        return
+
+      const finalHebrewLettersToMiddleLettersMenu = createFinalHebrewLettersToMiddleLetters(middleHebrewLettersToFinalLetters)
+      
+      //
+      
+      if (currentGuess.length <= 3 && !finalHebrewLettersArray.includes(key)) {
+        setCurrentGuess((prev) =>  {
+          return key + prev
+        })
       } 
+      else if (currentGuess.length <= 3 && finalHebrewLettersArray.includes(key)) {
+        setCurrentGuess((prev) =>  {
+          return finalHebrewLettersToMiddleLettersMenu[key] + prev
+        })
+      }
+
+      else if (currentGuess.length === 4 && finalHebrewLettersArray.includes(key)) {
+        setCurrentGuess((prev) =>  {
+          return key + prev
+        })
+      } 
+      else if (currentGuess.length === 4 && middleHebrewLettersToFinalLetters[key]) {
+        setCurrentGuess((prev) =>  {
+          return middleHebrewLettersToFinalLetters[key] + prev
+        })
+      }
+      else setCurrentGuess((prev) =>  {
+        return key + prev
+      })
+
+      
+      //
+ 
 
       if (currentGuess.length < 5) {
         if (language !== "Hebrew") {
           setIsWrongLanguage(true)
-        } else {
-          setCurrentGuess((prev) =>  {
-            return key + prev
-          })
+        // } else {
+        //   setCurrentGuess((prev) =>  {
+        //     return key + prev
+        //   })
         }
       }
     }
