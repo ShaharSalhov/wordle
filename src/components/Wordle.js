@@ -15,6 +15,7 @@ export default function Wordle( {solution, language, setLanguage, generateNewSol
 
   useEffect( () => {
     window.addEventListener('keyup', handleKeyup)
+    console.log("The hook is running", {isCorrect, turn})
 
     if (isCorrect) {
       setTimeout(() => setShowModal(true), 2000)
@@ -54,7 +55,7 @@ export default function Wordle( {solution, language, setLanguage, generateNewSol
 
           <Keypad usedKeys={usedKeys} handleKeyup={handleKeyup} language={language}/>
 
-          {showModal && <Modal isCorrect={isCorrect} turn={turn} solution={solution} resetGame={resetGame} setShowModal={setShowModal} />}
+          {showModal && <Modal isCorrect={isCorrect} turn={turn} solution={solution} resetGame={resetGame} setShowModal={setShowModal}/>}
 
             <p>{solution}</p>
           </div>
