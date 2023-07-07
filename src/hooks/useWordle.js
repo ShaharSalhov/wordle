@@ -36,6 +36,9 @@ const useWordle = (solution, language) => {
     return finalHebrewLettersToMiddleLetters;
   }
 
+  const finalHebrewLettersToMiddleLettersMenu = createFinalHebrewLettersToMiddleLetters(middleHebrewLettersToFinalLetters)
+
+
   const finalHebrewLettersArray = ["\u05DA", "\u05DD", "\u05DF", "\u05E3", "\u05E5"]; 
 
 
@@ -53,14 +56,14 @@ const useWordle = (solution, language) => {
       formattedGuess.forEach((l, i) => {
         if (solutionArray[i] === l.key) {
           formattedGuess[i].color = "green"
-          solutionArray[i] = null ///check
+          // solutionArray[i] = null ///check
         }
       });
   
       formattedGuess.forEach((l,i) => {
         if (solutionArray.includes(l.key) && l.color !== "green") {
           formattedGuess[i].color = "yellow"
-          solutionArray[solutionArray.indexOf(l.key)] = null
+          // solutionArray[solutionArray.indexOf(l.key)] = null
         }
         // if (!finalHebrewLettersArray.includes(l.key) && solutionArray[4] === middleHebrewLettersToFinalLetters[l.key])
         //   formattedGuess[i].color = "yellow"
@@ -84,21 +87,26 @@ const useWordle = (solution, language) => {
 
         if (solutionArray[(solutionLength -1) - i] === l.key) {
           formattedGuess[i].color = "green"
-          solutionArray[(solutionLength -1) - i] = null // TODO: check why
+          // solutionArray[(solutionLength -1) - i] = null // TODO: check why
         }
       });
   
       formattedGuess.forEach((l,i) => {
         if (solutionArray.includes(l.key) && l.color !== "green") {
           formattedGuess[i].color = "yellow"
-          solutionArray[solutionArray.indexOf(l.key)] = null// TODO: check why
+          // solutionArray[solutionArray.indexOf(l.key)] = null// TODO: check why
         }
-        if (!finalHebrewLettersArray.includes(l.key) && solutionArray[4] === middleHebrewLettersToFinalLetters[l.key]) {
+        // if (!finalHebrewLettersArray.includes(l.key) && solutionArray[4] === middleHebrewLettersToFinalLetters[l.key]) {
+        //   formattedGuess[i].color = "yellow"
+        //   solutionArray[solutionArray.indexOf(l.key)] = null
+        // }    
+       
+        if (i === 0 && solutionArray.includes(finalHebrewLettersToMiddleLettersMenu[l.key]) && l.color !== "green") {
           formattedGuess[i].color = "yellow"
-          solutionArray[solutionArray.indexOf(l.key)] = null
-        }        
+          console.log("im here")
+          // solutionArray[solutionArray.indexOf(l.key)] = null// TODO: check why
+        }
       })
-      console.log(middleHebrewLettersToFinalLetters)
       return formattedGuess
     }
   }
@@ -199,7 +207,6 @@ const useWordle = (solution, language) => {
 
     if (/^[\u05D0-\u05EA]$/.test(key)) {  //Hebrew
 
-      const finalHebrewLettersToMiddleLettersMenu = createFinalHebrewLettersToMiddleLetters(middleHebrewLettersToFinalLetters)
       
       //
       
