@@ -1,4 +1,5 @@
 import { useState } from "react"
+import letters from "../letters.json"
 
 const useWordle = (solution, language, generateNewSolution) => {
 
@@ -20,26 +21,26 @@ const useWordle = (solution, language, generateNewSolution) => {
     generateNewSolution()
   }
 
-  const middleHebrewLettersToFinalLetters = {
-    "\u05E6": "\u05E5", // Tsadi
-    "\u05E4": "\u05E3", // Pei
-    "\u05E0": "\u05DF", // Nun 
-    "\u05DE": "\u05DD", // Mem
-    "\u05DB": "\u05DA" // Haf
-  }
+  // const middleHebrewLettersToFinalLetters = {
+  //   "\u05E6": "\u05E5", // Tsadi
+  //   "\u05E4": "\u05E3", // Pei
+  //   "\u05E0": "\u05DF", // Nun 
+  //   "\u05DE": "\u05DD", // Mem
+  //   "\u05DB": "\u05DA" // Haf
+  // }
 
-  const createFinalHebrewLettersToMiddleLetters = ( middleHebrewLettersToFinalLetters ) => {
+  const createFinalLettersToMiddleLetters = ( middleLettersToFinalLetters ) => {
 
-    const finalHebrewLettersToMiddleLetters = {};
-    Object.entries(middleHebrewLettersToFinalLetters).forEach(([key, value]) => {
-      finalHebrewLettersToMiddleLetters[value] = key;
+    const finalLettersToMiddleLetters = {};
+    Object.entries(middleLettersToFinalLetters).forEach(([key, value]) => {
+      finalLettersToMiddleLetters[value] = key;
     });
-    return finalHebrewLettersToMiddleLetters;
+    return finalLettersToMiddleLetters;
   }
 
-  const finalHebrewLettersToMiddleLettersMenu = createFinalHebrewLettersToMiddleLetters(middleHebrewLettersToFinalLetters)
+  const finalLettersToMiddleLettersMenu = createFinalLettersToMiddleLetters(letters[language].middleLettersToFinalLetters)
 
-  const finalHebrewLettersArray = Object.keys(finalHebrewLettersToMiddleLettersMenu); 
+  const finalLettersArray = Object.keys(finalLettersToMiddleLettersMenu); 
 
 
 
@@ -47,7 +48,7 @@ const useWordle = (solution, language, generateNewSolution) => {
 
     let solutionArray = [...solution]
 
-    if (language === "English") {
+    if (letters[language].isLeftToRight) {
 
       let formattedGuess = [...currentGuess].map( (l) => {
         return {key: l, color: "grey"}
@@ -73,7 +74,7 @@ const useWordle = (solution, language, generateNewSolution) => {
       return formattedGuess
     }
 
-    else if (language === "Hebrew") {
+    else {
 
       const solutionLength = solution.length
 
@@ -101,7 +102,7 @@ const useWordle = (solution, language, generateNewSolution) => {
         //   solutionArray[solutionArray.indexOf(l.key)] = null
         // }    
        
-        if (i === 0 && solutionArray.includes(finalHebrewLettersToMiddleLettersMenu[l.key]) && l.color !== "green") {
+        if (i === 0 && solutionArray.includes(finalLettersToMiddleLettersMenu[l.key]) && l.color !== "green") {
           formattedGuess[i].color = "yellow"
           console.log("im here")
           // solutionArray[solutionArray.indexOf(l.key)] = null// TODO: check why
@@ -115,7 +116,7 @@ const useWordle = (solution, language, generateNewSolution) => {
 
   const addNewGuess = (formattedGuess) => {
 
-    if ( language === "English" ? currentGuess === solution : currentGuess.split('').reverse().join('') === solution ) {
+    if ( letters[language].isLeftToRight ? currentGuess === solution : currentGuess.split('').reverse().join('') === solution ) {
       setIsCorrect(true)
     }
 
@@ -178,14 +179,14 @@ const useWordle = (solution, language, generateNewSolution) => {
       addNewGuess(formatted)
     }
 
-    if(key === "Backspace" && language === "English") {
+    if(key === "Backspace" && letters[language].isLeftToRight) {
       setCurrentGuess((prev) => {
         return prev.slice(0, -1)
       })
       return
     }
 
-    if(key === "Backspace" && language === "Hebrew") {
+    if(key === "Backspace" && !letters[language].isLeftToRight) {
       setCurrentGuess((prev) => {
         return prev.slice(1, prev.length)
       })
@@ -193,54 +194,49 @@ const useWordle = (solution, language, generateNewSolution) => {
     }
     setIsWrongLanguage(false) //todo: check if needed
 
-    if (/^[A-Za-z]$/.test(key)) {  //English
-      if (currentGuess.length < 5) {
-        if (language !== "English") {
-          setIsWrongLanguage(true)
-        } else {
-          setCurrentGuess((prev) =>  {
-            return prev + key
-          })
-        }
-      }
+
+
+    let isValidInput = letters[language].letters.map(ob => ob.key).includes(key.toLowerCase()) || Object.values(letters[language].middleLettersToFinalLetters).includes(key.toLowerCase())
+
+    if ( currentGuess.length >= 5) {
+      return
     }
 
-    if (/^[\u05D0-\u05EA]$/.test(key)) {  //Hebrew
-
-      if (currentGuess.length < 5) {
-
-        if (language !== "Hebrew") {
-          setIsWrongLanguage(true)
-        } 
-        
-        else {
-          if (currentGuess.length <= 3 && !finalHebrewLettersArray.includes(key)) {
-            setCurrentGuess((prev) =>  {
-              return key + prev
-            })
-          } 
-          else if (currentGuess.length <= 3 && finalHebrewLettersArray.includes(key)) {
-            setCurrentGuess((prev) =>  {
-              return finalHebrewLettersToMiddleLettersMenu[key] + prev
-            })
-          }
-  
-          else if (currentGuess.length === 4 && finalHebrewLettersArray.includes(key)) {
-            setCurrentGuess((prev) =>  {
-              return key + prev
-            })
-          } 
-          else if (currentGuess.length === 4 && middleHebrewLettersToFinalLetters[key]) {
-            setCurrentGuess((prev) =>  {
-              return middleHebrewLettersToFinalLetters[key] + prev
-            })
-          }
-          else setCurrentGuess((prev) =>  {
-            return key + prev
-          })
-        }
-      }
+    if (isValidInput && letters[language].isLeftToRight) {
+      setCurrentGuess((prev) =>  {
+        return prev + key
+      })
     }
+    else if (isValidInput && !letters[language].isLeftToRight) {
+      if (currentGuess.length <= 3 && !finalLettersArray.includes(key)) {
+        setCurrentGuess((prev) =>  {
+          return key + prev
+        })
+      } 
+      else if (currentGuess.length <= 3 && finalLettersArray.includes(key)) {
+        setCurrentGuess((prev) =>  {
+          return finalLettersToMiddleLettersMenu[key] + prev
+        })
+      }
+
+      else if (currentGuess.length === 4 && finalLettersArray.includes(key)) {
+        setCurrentGuess((prev) =>  {
+          return key + prev
+        })
+      } 
+      else if (currentGuess.length === 4 && letters[language].middleLettersToFinalLetters[key]) {
+        setCurrentGuess((prev) =>  {
+          return letters[language].middleLettersToFinalLetters[key] + prev
+        })
+      }
+      else setCurrentGuess((prev) =>  {
+        return key + prev
+      })
+    }
+    else {
+      setIsWrongLanguage(true)
+    }
+
   }
 
   return {turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyup, resetGame, isWrongLanguage} 

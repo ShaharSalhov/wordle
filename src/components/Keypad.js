@@ -14,7 +14,7 @@ export default function Keypad( {usedKeys, handleKeyup, language} ) {
 
   return (
     <div className='keypad'>
-      {letters[language].map((l) => {
+      {letters[language].letters.map((l) => {
         const color = usedKeys[l.key]
         return (
           <button key={l.key} className={color} onClick={ () => (handleKeyup(l)) } >{l.key.toUpperCase()}</button>

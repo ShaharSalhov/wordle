@@ -1,4 +1,5 @@
 import React from 'react'
+import letters from "../letters.json"
 
 export default function Row({ guess, currentGuess, language }) {
 
@@ -16,7 +17,7 @@ export default function Row({ guess, currentGuess, language }) {
 
     let currentGuessLetters = currentGuess.split('')
 
-    if ( language === "English" ) {
+    if ( letters[language].isLeftToRight ) {
       return (
         <div className='row current'>
           {currentGuessLetters.map( (letter, i) => (
@@ -29,7 +30,7 @@ export default function Row({ guess, currentGuess, language }) {
       )
     }
 
-    else if ( language === "Hebrew" ) {
+    else {
       return (
         <div className='row current'>
           {[...Array(5 - currentGuessLetters.length)].map((_, i) => (
