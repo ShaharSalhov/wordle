@@ -1,5 +1,4 @@
 import React from 'react'
-import letters from '../letters.json'
 
 export default function Row({ guess, currentGuess, language }) {
 
