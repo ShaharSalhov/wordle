@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { useEffect } from "react";
 import Wordle from "./components/Wordle";
-import solutions from "./solutions.json";
+import languageConfig from "./languageConfig.json";
 
 
 function App() {
@@ -10,7 +10,8 @@ function App() {
 
   const generateNewSolution = useCallback(
     () => {
-      const randomSolution = solutions[language][Math.floor(Math.random() * solutions[language].length)]
+      let solutions = languageConfig[language].solutions
+      const randomSolution = solutions[Math.floor(Math.random() * solutions.length)]
       setSolution(randomSolution.word)
     },
     [language, setSolution]
