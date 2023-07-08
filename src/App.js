@@ -16,6 +16,15 @@ function App() {
     [language, setSolution]
   )
 
+  useEffect(() => {
+    const languageData = window.localStorage.getItem('MY_LANGUAGE_STATE');
+    if ( languageData !== null ) setLanguage(JSON.parse(languageData));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('MY_LANGUAGE_STATE', JSON.stringify(language));
+  }, [language])
+
   useEffect( () => {
     // fetch('http://localhost:3001/solutions')
     //   .then(res => res.json())
