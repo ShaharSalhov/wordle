@@ -210,42 +210,38 @@ const useWordle = (solution, language, generateNewSolution) => {
 
       if (currentGuess.length < 5) {
 
-        if (currentGuess.length <= 3 && !finalHebrewLettersArray.includes(key)) {
-          setCurrentGuess((prev) =>  {
-            return key + prev
-          })
-        } 
-        else if (currentGuess.length <= 3 && finalHebrewLettersArray.includes(key)) {
-          setCurrentGuess((prev) =>  {
-            return finalHebrewLettersToMiddleLettersMenu[key] + prev
-          })
-        }
-
-        else if (currentGuess.length === 4 && finalHebrewLettersArray.includes(key)) {
-          setCurrentGuess((prev) =>  {
-            return key + prev
-          })
-        } 
-        else if (currentGuess.length === 4 && middleHebrewLettersToFinalLetters[key]) {
-          setCurrentGuess((prev) =>  {
-            return middleHebrewLettersToFinalLetters[key] + prev
-          })
-        }
-        else setCurrentGuess((prev) =>  {
-          return key + prev
-        })
- 
-        
         if (language !== "Hebrew") {
           setIsWrongLanguage(true)
-        // } else {
-        //   setCurrentGuess((prev) =>  {
-        //     return key + prev
-        //   })
+        } 
+        
+        else {
+          if (currentGuess.length <= 3 && !finalHebrewLettersArray.includes(key)) {
+            setCurrentGuess((prev) =>  {
+              return key + prev
+            })
+          } 
+          else if (currentGuess.length <= 3 && finalHebrewLettersArray.includes(key)) {
+            setCurrentGuess((prev) =>  {
+              return finalHebrewLettersToMiddleLettersMenu[key] + prev
+            })
+          }
+  
+          else if (currentGuess.length === 4 && finalHebrewLettersArray.includes(key)) {
+            setCurrentGuess((prev) =>  {
+              return key + prev
+            })
+          } 
+          else if (currentGuess.length === 4 && middleHebrewLettersToFinalLetters[key]) {
+            setCurrentGuess((prev) =>  {
+              return middleHebrewLettersToFinalLetters[key] + prev
+            })
+          }
+          else setCurrentGuess((prev) =>  {
+            return key + prev
+          })
         }
       }
     }
-
   }
 
   return {turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyup, resetGame, isWrongLanguage} 
