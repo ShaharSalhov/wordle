@@ -6,6 +6,10 @@ import Modal from './Modal'
 import LanguageIcon from '@mui/icons-material/Language';
 import IconButton from '@mui/material/IconButton';
 import Alert from '@mui/material/Alert';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import letters from "../letters.json"
 
 
 export default function Wordle( {solution, language, setLanguage, generateNewSolution } ) {
@@ -36,14 +40,24 @@ export default function Wordle( {solution, language, setLanguage, generateNewSol
         <h1>SHAHAR'S WORDLE</h1>
 
         <div className="languageDiv">
-          <p>{language}</p>
-          <IconButton disableRipple onClick={ () => {
-              resetGame()
-              language === "English" ? setLanguage("Hebrew") : setLanguage("English") 
-            }
-              }>
-            <LanguageIcon />
-          </IconButton>
+
+          <LanguageIcon className='LanguageIcon'/>
+
+          <FormControl FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+            <Select
+              variant='standard'
+              labelId="demo-select-small-label"
+              id="demo-simple-small"
+              value={language}
+              onChange={(event) => {
+                resetGame()
+                setLanguage(event.target.value)
+              }}
+            >
+              { Object.keys(letters).map( lan => <MenuItem value={lan}>{lan}</MenuItem>) }
+            </Select>
+          </FormControl>
+
         </div>  
       </header>
 

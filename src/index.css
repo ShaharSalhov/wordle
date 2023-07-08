@@ -10,6 +10,11 @@ header {
 .languageDiv {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.LanguageIcon {
+  color: rgb(121, 120, 120);
 }
 
 .button {
