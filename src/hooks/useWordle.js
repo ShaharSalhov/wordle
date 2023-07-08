@@ -42,8 +42,6 @@ const useWordle = (solution, language, generateNewSolution) => {
 
   const finalLettersArray = Object.keys(finalLettersToMiddleLettersMenu); 
 
-
-
   const formatGuess = () => {
 
     let solutionArray = [...solution]
@@ -57,18 +55,15 @@ const useWordle = (solution, language, generateNewSolution) => {
       formattedGuess.forEach((l, i) => {
         if (solutionArray[i] === l.key) {
           formattedGuess[i].color = "green"
-          // solutionArray[i] = null ///check
+          solutionArray[i] = null // to deal with the same ltter inserted
         }
       });
   
       formattedGuess.forEach((l,i) => {
-        if (solutionArray.includes(l.key) && l.color !== "green") {
+        if (solutionArray.includes(l.key) && l.color !== "green" ) {
           formattedGuess[i].color = "yellow"
-          // solutionArray[solutionArray.indexOf(l.key)] = null
+          solutionArray[solutionArray.indexOf(l.key)] = null
         }
-        // if (!finalHebrewLettersArray.includes(l.key) && solutionArray[4] === middleHebrewLettersToFinalLetters[l.key])
-        //   formattedGuess[i].color = "yellow"
-        //   solutionArray[solutionArray.indexOf(l.key)] = null
       })
   
       return formattedGuess
@@ -83,29 +78,22 @@ const useWordle = (solution, language, generateNewSolution) => {
       })
       
       formattedGuess.forEach((l, i) => {
-        // console.log(`i=${i} l.key=${l.key} | solutionArray[(solutionLength -1) - i]=${solutionArray[(solutionLength -1) - i]}|
-        // will change formattedGuess[(solutionLength -1) - i].key=${formattedGuess[(solutionLength -1) - i].key}`)
 
         if (solutionArray[(solutionLength -1) - i] === l.key) {
           formattedGuess[i].color = "green"
-          // solutionArray[(solutionLength -1) - i] = null // TODO: check why
+          solutionArray[(solutionLength -1) - i] = null // To deal with the same letter inserted
         }
       });
   
       formattedGuess.forEach((l,i) => {
         if (solutionArray.includes(l.key) && l.color !== "green") {
           formattedGuess[i].color = "yellow"
-          // solutionArray[solutionArray.indexOf(l.key)] = null// TODO: check why
+          solutionArray[solutionArray.indexOf(l.key)] = null // // To deal with the same letter inserted
         }
-        // if (!finalHebrewLettersArray.includes(l.key) && solutionArray[4] === middleHebrewLettersToFinalLetters[l.key]) {
-        //   formattedGuess[i].color = "yellow"
-        //   solutionArray[solutionArray.indexOf(l.key)] = null
-        // }    
        
         if (i === 0 && solutionArray.includes(finalLettersToMiddleLettersMenu[l.key]) && l.color !== "green") {
           formattedGuess[i].color = "yellow"
-          console.log("im here")
-          // solutionArray[solutionArray.indexOf(l.key)] = null// TODO: check why
+          solutionArray[solutionArray.indexOf(l.key)] = null // // To deal with the same letter inserted
         }
       })
       return formattedGuess
