@@ -8,7 +8,7 @@ import Alert from '@mui/material/Alert';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import letters from "../letters.json"
+import languageConfig from "../languageConfig.json"
 
 
 export default function Wordle( {solution, language, setLanguage, generateNewSolution } ) {
@@ -53,7 +53,7 @@ export default function Wordle( {solution, language, setLanguage, generateNewSol
                 setLanguage(event.target.value)
               }}
             >
-              { Object.keys(letters).map( lan => <MenuItem value={lan}>{lan}</MenuItem>) }
+              { Object.keys(languageConfig).map( lan => <MenuItem value={lan}>{lan}</MenuItem>) }
             </Select>
           </FormControl>
 

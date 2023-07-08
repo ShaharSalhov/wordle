@@ -1,5 +1,5 @@
 import React from 'react'
-import letters from "../letters.json"
+import languageConfig from "../languageConfig.json"
 
 export default function Keypad( {usedKeys, handleKeyup, language} ) {
   // const [letters, setLetters] = useState(null)
@@ -14,7 +14,7 @@ export default function Keypad( {usedKeys, handleKeyup, language} ) {
 
   return (
     <div className='keypad'>
-      {letters[language].letters.map((l) => {
+      {languageConfig[language].letters.map((l) => {
         const color = usedKeys[l.key]
         return (
           <button key={l.key} className={color} onClick={ () => (handleKeyup(l)) } >{l.key.toUpperCase()}</button>

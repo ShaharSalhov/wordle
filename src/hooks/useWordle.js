@@ -1,5 +1,5 @@
 import { useState } from "react"
-import letters from "../letters.json"
+import languageConfig from "../languageConfig.json"
 
 const useWordle = (solution, language, generateNewSolution) => {
 
@@ -38,7 +38,7 @@ const useWordle = (solution, language, generateNewSolution) => {
     return finalLettersToMiddleLetters;
   }
 
-  const finalLettersToMiddleLettersMenu = createFinalLettersToMiddleLetters(letters[language].middleLettersToFinalLetters)
+  const finalLettersToMiddleLettersMenu = createFinalLettersToMiddleLetters(languageConfig[language].middleLettersToFinalLetters)
 
   const finalLettersArray = Object.keys(finalLettersToMiddleLettersMenu); 
 
@@ -48,7 +48,7 @@ const useWordle = (solution, language, generateNewSolution) => {
 
     let solutionArray = [...solution]
 
-    if (letters[language].isLeftToRight) {
+    if (languageConfig[language].isLeftToRight) {
 
       let formattedGuess = [...currentGuess].map( (l) => {
         return {key: l, color: "grey"}
@@ -116,7 +116,7 @@ const useWordle = (solution, language, generateNewSolution) => {
 
   const addNewGuess = (formattedGuess) => {
 
-    if ( letters[language].isLeftToRight ? currentGuess === solution : currentGuess.split('').reverse().join('') === solution ) {
+    if ( languageConfig[language].isLeftToRight ? currentGuess === solution : currentGuess.split('').reverse().join('') === solution ) {
       setIsCorrect(true)
     }
 
@@ -179,14 +179,14 @@ const useWordle = (solution, language, generateNewSolution) => {
       addNewGuess(formatted)
     }
 
-    if(key === "Backspace" && letters[language].isLeftToRight) {
+    if(key === "Backspace" && languageConfig[language].isLeftToRight) {
       setCurrentGuess((prev) => {
         return prev.slice(0, -1)
       })
       return
     }
 
-    if(key === "Backspace" && !letters[language].isLeftToRight) {
+    if(key === "Backspace" && !languageConfig[language].isLeftToRight) {
       setCurrentGuess((prev) => {
         return prev.slice(1, prev.length)
       })
@@ -196,18 +196,18 @@ const useWordle = (solution, language, generateNewSolution) => {
 
 
 
-    let isValidInput = letters[language].letters.map(ob => ob.key).includes(key.toLowerCase()) || Object.values(letters[language].middleLettersToFinalLetters).includes(key.toLowerCase())
+    let isValidInput = languageConfig[language].letters.map(ob => ob.key).includes(key.toLowerCase()) || Object.values(languageConfig[language].middleLettersToFinalLetters).includes(key.toLowerCase())
 
     if ( currentGuess.length >= 5) {
       return
     }
 
-    if (isValidInput && letters[language].isLeftToRight) {
+    if (isValidInput && languageConfig[language].isLeftToRight) {
       setCurrentGuess((prev) =>  {
         return prev + key
       })
     }
-    else if (isValidInput && !letters[language].isLeftToRight) {
+    else if (isValidInput && !languageConfig[language].isLeftToRight) {
       if (currentGuess.length <= 3 && !finalLettersArray.includes(key)) {
         setCurrentGuess((prev) =>  {
           return key + prev
@@ -224,9 +224,9 @@ const useWordle = (solution, language, generateNewSolution) => {
           return key + prev
         })
       } 
-      else if (currentGuess.length === 4 && letters[language].middleLettersToFinalLetters[key]) {
+      else if (currentGuess.length === 4 && languageConfig[language].middleLettersToFinalLetters[key]) {
         setCurrentGuess((prev) =>  {
-          return letters[language].middleLettersToFinalLetters[key] + prev
+          return languageConfig[language].middleLettersToFinalLetters[key] + prev
         })
       }
       else setCurrentGuess((prev) =>  {

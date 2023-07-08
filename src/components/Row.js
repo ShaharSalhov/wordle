@@ -1,5 +1,5 @@
 import React from 'react'
-import letters from "../letters.json"
+import languageConfig from "../languageConfig.json"
 
 export default function Row({ guess, currentGuess, language }) {
 
@@ -17,7 +17,7 @@ export default function Row({ guess, currentGuess, language }) {
 
     let currentGuessLetters = currentGuess.split('')
 
-    if ( letters[language].isLeftToRight ) {
+    if ( languageConfig[language].isLeftToRight ) {
       return (
         <div className='row current'>
           {currentGuessLetters.map( (letter, i) => (
