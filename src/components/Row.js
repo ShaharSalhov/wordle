@@ -1,7 +1,7 @@
 import React from 'react'
 import letters from '../letters.json'
 
-export default function Row({ guess, currentGuess }) {
+export default function Row({ guess, currentGuess, language }) {
 
   if (guess) {
     return (
@@ -17,7 +17,7 @@ export default function Row({ guess, currentGuess }) {
 
     let currentGuessLetters = currentGuess.split('')
 
-    if ( letters.English.map((ob => ob.key)).includes(currentGuessLetters[0]) ) {
+    if ( language === "English" ) {
       return (
         <div className='row current'>
           {currentGuessLetters.map( (letter, i) => (
@@ -30,7 +30,7 @@ export default function Row({ guess, currentGuess }) {
       )
     }
 
-    else if ( letters.Hebrew.map((ob => ob.key)).includes(currentGuessLetters[0]) ) {
+    else if ( language === "Hebrew" ) {
       return (
         <div className='row current'>
           {[...Array(5 - currentGuessLetters.length)].map((_, i) => (
@@ -41,11 +41,7 @@ export default function Row({ guess, currentGuess }) {
           ))}
         </div>
       )
-    }
-
-
-
-    
+    }    
   }
 
   return (

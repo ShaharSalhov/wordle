@@ -192,7 +192,7 @@ const useWordle = (solution, language, generateNewSolution) => {
       })
       return
     }
-    setIsWrongLanguage(false)
+    setIsWrongLanguage(false) //todo: check if needed
 
     if (/^[A-Za-z]$/.test(key)) {  //English
       if (currentGuess.length < 5) {

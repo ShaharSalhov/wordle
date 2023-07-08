@@ -48,7 +48,7 @@ export default function Wordle( {solution, language, setLanguage, generateNewSol
       </header>
 
       <div>
-          <Grid guesses={guesses} currentGuess={currentGuess} turn={turn} />
+          <Grid guesses={guesses} currentGuess={currentGuess} turn={turn} language={language}/>
 
           {isWrongLanguage ? <Alert className='alert' severity="error">Check your keyboard language!</Alert> : null}
 
