@@ -39,8 +39,7 @@ const useWordle = (solution, language, generateNewSolution) => {
 
   const finalHebrewLettersToMiddleLettersMenu = createFinalHebrewLettersToMiddleLetters(middleHebrewLettersToFinalLetters)
 
-
-  const finalHebrewLettersArray = ["\u05DA", "\u05DD", "\u05DF", "\u05E3", "\u05E5"]; 
+  const finalHebrewLettersArray = Object.keys(finalHebrewLettersToMiddleLettersMenu); 
 
 
 
