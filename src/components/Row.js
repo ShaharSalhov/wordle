@@ -36,7 +36,12 @@ export default function Row({ guess, currentGuess, language }) {
             <div key={i} ></div>
           ))}
           {currentGuessLetters.map( (letter, i) => (
-            <div key={i} className='filled' >{letter}</div>
+            <div 
+              key={`${letter}-${(currentGuessLetters.length-1)-i}`} // to make the new letter inserted bounce. The key must be uniqe and this syntax deals with sequence of same letters. Now it actually changes at every render and gets a new class.
+              className='filled'
+            >
+              {letter}
+            </div>
           ))}
         </div>
       )
