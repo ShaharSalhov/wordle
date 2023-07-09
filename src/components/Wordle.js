@@ -53,7 +53,7 @@ export default function Wordle( {solution, language, setLanguage, generateNewSol
                 setLanguage(event.target.value)
               }}
             >
-              { Object.keys(languageConfig).map( lan => <MenuItem value={lan}>{lan}</MenuItem>) }
+              { Object.keys(languageConfig).map( lan => <MenuItem key={lan} value={lan}>{lan}</MenuItem>) }
             </Select>
           </FormControl>
 
