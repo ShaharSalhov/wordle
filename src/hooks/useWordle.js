@@ -21,14 +21,6 @@ const useWordle = (solution, language, generateNewSolution) => {
     generateNewSolution()
   }
 
-  // const middleHebrewLettersToFinalLetters = {
-  //   "\u05E6": "\u05E5", // Tsadi
-  //   "\u05E4": "\u05E3", // Pei
-  //   "\u05E0": "\u05DF", // Nun 
-  //   "\u05DE": "\u05DD", // Mem
-  //   "\u05DB": "\u05DA" // Haf
-  // }
-
   const createFinalLettersToMiddleLetters = ( middleLettersToFinalLetters ) => {
 
     const finalLettersToMiddleLetters = {};
@@ -55,12 +47,11 @@ const useWordle = (solution, language, generateNewSolution) => {
       formattedGuess.forEach((l, i) => {
         if (solutionArray[i] === l.key) {
           formattedGuess[i].color = "green"
-          solutionArray[i] = null // to deal with the same ltter inserted
+          solutionArray[i] = null // to deal with the same letter inserted
         }
       });
-  
       formattedGuess.forEach((l,i) => {
-        if (solutionArray.includes(l.key) && l.color !== "green" ) {
+        if ( (solutionArray.includes(l.key) || solutionArray.includes(languageConfig[language].middleLettersToFinalLetters[l.key] )) && l.color !== "green" ) {
           formattedGuess[i].color = "yellow"
           solutionArray[solutionArray.indexOf(l.key)] = null
         }
@@ -86,7 +77,7 @@ const useWordle = (solution, language, generateNewSolution) => {
       });
   
       formattedGuess.forEach((l,i) => {
-        if (solutionArray.includes(l.key) && l.color !== "green") {
+        if ( (solutionArray.includes(l.key) || solutionArray.includes(languageConfig[language].middleLettersToFinalLetters[l.key] )) && l.color !== "green" ) {
           formattedGuess[i].color = "yellow"
           solutionArray[solutionArray.indexOf(l.key)] = null // // To deal with the same letter inserted
         }
