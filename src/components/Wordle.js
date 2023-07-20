@@ -69,7 +69,6 @@ export default function Wordle( {solution, language, setLanguage, generateNewSol
 
           {showModal && <Modal isCorrect={isCorrect} turn={turn} solution={solution} resetGame={resetGame} setShowModal={setShowModal}/>}
 
-              {solution}
       </div>
     </React.Fragment>
   )
