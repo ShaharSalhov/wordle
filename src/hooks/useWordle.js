@@ -55,6 +55,13 @@ const useWordle = (solution, language, generateNewSolution) => {
           formattedGuess[i].color = "yellow"
           solutionArray[solutionArray.indexOf(l.key)] = null
         }
+        
+        if (i === 4 && solutionArray.includes(finalLettersToMiddleLettersMenu[l.key]) && l.color !== "green") {
+          formattedGuess[i].color = "yellow"
+          solutionArray[solutionArray.indexOf(l.key)] = null // // To deal with the same letter inserted
+        } // check this with Ariel
+
+
       })
   
       return formattedGuess
@@ -69,7 +76,6 @@ const useWordle = (solution, language, generateNewSolution) => {
       })
       
       formattedGuess.forEach((l, i) => {
-
         if (solutionArray[(solutionLength -1) - i] === l.key) {
           formattedGuess[i].color = "green"
           solutionArray[(solutionLength -1) - i] = null // To deal with the same letter inserted
