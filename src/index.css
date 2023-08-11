@@ -112,6 +112,7 @@ h1 {
   line-height: 50px;
   font-size: 17px;
   border: none;
+  color: black;
 }
 .keypad > button.action {
   width: 62px;
