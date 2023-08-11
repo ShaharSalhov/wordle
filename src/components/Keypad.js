@@ -12,16 +12,17 @@ export default function Keypad( {usedKeys, handleKeyup, language} ) {
   //   })
   // }, [])
 
+
   return (
-    <div className='keypad'>
+    <div className='keypad' data-testid="keypad" language={language}>
       {languageConfig[language].letters.map((l) => {
         const color = usedKeys[l.key]
         return (
-          <button key={l.key} className={color} onClick={ () => (handleKeyup(l)) } >{l.key.toUpperCase()}</button>
+          <button data-testid={`button-${l.key}`} key={l.key} className={color} onClick={ () => (handleKeyup(l)) } >{l.key.toUpperCase()}</button>
         )
       })}
-      <button key="Delete" className='action' onClick={ () => handleKeyup({key: "Backspace"}) }>⌫</button>
-      <button key="Enter" className='action' onClick={ () => handleKeyup({key: "Enter"}) }>↵</button>
+      <button data-testID={"delete-button"} key="Delete" className='action' onClick={ () => handleKeyup({key: "Backspace"}) }>⌫</button>
+      <button data-testID={"enter-button"} key="Enter" className='action' onClick={ () => handleKeyup({key: "Enter"}) }>↵</button>
     </div>
   )
 }

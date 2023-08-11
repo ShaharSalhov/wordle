@@ -5,11 +5,11 @@ export default function Row({ guess, currentGuess, language }) {
 
   if (guess) {
     return (
-      <div className='row past'>
+      <div className='row past' data-testID={"row-past"}>
         {guess.map( (l, i) => (
-          <div key={i} className={l.color}>{l.key}</div>
+          <div key={i} className={l.color} data-testID={`${i}-index`} >{l.key}</div>
         ))}
-      </div>
+  </div>
     )
   }
 
@@ -21,7 +21,7 @@ export default function Row({ guess, currentGuess, language }) {
       return (
         <div className='row current'>
           {currentGuessLetters.map( (letter, i) => (
-            <div key={i} className='filled' >{letter}</div>
+            <div data-testid={`letter-${letter}`} key={i} className='filled' >{letter}</div>
           ))}
           {[...Array(5 - currentGuessLetters.length)].map((_, i) => (
             <div key={i} ></div>
@@ -38,6 +38,7 @@ export default function Row({ guess, currentGuess, language }) {
           ))}
           {currentGuessLetters.map( (letter, i) => (
             <div 
+              data-testid={`letter-${letter}`}
               key={`${letter}-${(currentGuessLetters.length-1)-i}`} // to make the new letter inserted bounce. The key must be uniqe and this syntax deals with sequence of same letters. Now it actually changes at every render and gets a new class.
               className='filled'
             >

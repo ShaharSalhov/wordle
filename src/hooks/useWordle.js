@@ -29,7 +29,6 @@ const useWordle = (solution, language, generateNewSolution) => {
     });
     return finalLettersToMiddleLetters;
   }
-
   const finalLettersToMiddleLettersMenu = createFinalLettersToMiddleLetters(languageConfig[language].middleLettersToFinalLetters)
 
   const finalLettersArray = Object.keys(finalLettersToMiddleLettersMenu); 

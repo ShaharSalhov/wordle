@@ -35,15 +35,16 @@ export default function Wordle( {solution, language, setLanguage, generateNewSol
 
   return (
     <React.Fragment>
-      <header className="header">
+      <header className="header" data-testid="header">
         <h1>SHAHAR'S WORDLE</h1>
 
-        <div className="languageDiv">
+        <div className="languageDiv" data-testid="language-div">
 
           <LanguageIcon className='LanguageIcon'/>
 
-          <FormControl FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+          <FormControl sx={{ m: 1, minWidth: 120 }} size="small" data-testid={"language-select-form"}>
             <Select
+              data-testid={"language-select"}
               variant='standard'
               labelId="demo-select-small-label"
               id="demo-simple-small"
@@ -53,7 +54,7 @@ export default function Wordle( {solution, language, setLanguage, generateNewSol
                 setLanguage(event.target.value)
               }}
             >
-              { Object.keys(languageConfig).map( lan => <MenuItem key={lan} value={lan}>{lan}</MenuItem>) }
+              { Object.keys(languageConfig).map( lan => <MenuItem data-testid={`select-option-${lan}`} key={lan} value={lan}>{lan}</MenuItem>) }
             </Select>
           </FormControl>
 
